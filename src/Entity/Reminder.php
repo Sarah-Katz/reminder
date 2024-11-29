@@ -67,7 +67,7 @@ class Reminder
         return $this->isDone;
     }
 
-    public function setDone(bool $isDone): static
+    public function setIsDone(bool $isDone): static
     {
         $this->isDone = $isDone;
 

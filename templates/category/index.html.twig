@@ -1,35 +1,35 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des catégories{% endblock %}
+{% block title %}
+  Liste des catégories
+{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+  {# Flex container #}
+  <div class="flex flex-col">
+    {# New Category Button #}
+    <a href="{{ path('app_category_new') }}" class="btn w-min mx-auto my-6 px-4 py-2 bg-primary hover:bg-secondary text-white font-bold rounded-lg shadow-md transition duration-300 ease-in-out">Ajouter</a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    {# Category Table #}
+    <table class="table-fixed mx-6">
+      <thead>
+        <tr>
+          <th>Catégorie</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for category in categories %}
-            <tr>
-                <td>{{ category.id }}</td>
-                <td>{{ category.name }}</td>
-                <td>
-                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
-                </td>
-            </tr>
+         <tr class="{% if loop.index is odd %}bg-secondary{% else %}bg-tertiary{% endif %}">
+            <td class="p-3 text-center text-white font-semibold">
+              <a href="{{ path('app_category_edit', { id: category.id }) }}">{{ category.name }}</a>
+            </td>
+          </tr>
         {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+          <tr>
+            <td colspan="3">Aucune catégorie trouvée en base de données</td>
+          </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
-
-    <a href="{{ path('app_category_new') }}">Create new</a>
+  </div>
 {% endblock %}

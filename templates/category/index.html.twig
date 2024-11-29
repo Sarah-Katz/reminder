@@ -19,9 +19,9 @@
       </thead>
       <tbody>
         {% for category in categories %}
-         <tr class="{% if loop.index is odd %}bg-secondary{% else %}bg-tertiary{% endif %}">
-            <td class="p-3 text-center text-white font-semibold">
-              <a href="{{ path('app_category_edit', { id: category.id }) }}">{{ category.name }}</a>
+          <tr class="{% if loop.index is odd %}bg-secondary{% else %}bg-tertiary{% endif %} cursor-pointer "
+          onclick="window.location='{{ path('app_category_edit', { id: category.id }) }}'">
+            <td class="p-3 text-center text-white font-semibold">{{ category.name }}
             </td>
           </tr>
         {% else %}

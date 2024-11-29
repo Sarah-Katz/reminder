@@ -16,15 +16,12 @@ class ReminderType extends AbstractType
         $builder
             ->add('title')
             ->add('isDone')
-            ->add('datetimeCreate', null, [
-                'widget' => 'single_text',
-            ])
             ->add('datetimeExpire', null, [
                 'widget' => 'single_text',
             ])
             ->add('category', EntityType::class, [
                 'class' => Category::class,
-                'choice_label' => 'id',
+                'choice_label' => 'name',
             ])
         ;
     }

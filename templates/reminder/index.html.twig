@@ -1,41 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reminder index{% endblock %}
+{% block title %}
+  Liste des rappels
+{% endblock %}
 
 {% block body %}
-    <h1>Reminder index</h1>
+  {# Flex container #}
+  <div class="flex flex-col">
+    {# New Reminder Button #}
+    <a href="{{ path('app_reminder_new') }}" class="btn w-min mx-auto my-6 px-4 py-2 bg-primary hover:bg-secondary text-white font-bold rounded-lg shadow-md transition duration-300 ease-in-out">Ajouter</a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>IsDone</th>
-                <th>DatetimeCreate</th>
-                <th>DatetimeExpire</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    {# Reminder Table #}
+    <table class="table-fixed mx-6">
+      <thead>
+        <tr>
+          <th class="p-3 text-left">Titre</th>
+          <th class="p-3 text-left">Statut</th>
+          <th class="p-3 text-left">Catégorie</th>
+          <th class="p-3 text-left">Date d'expiration</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for reminder in reminders %}
-            <tr>
-                <td>{{ reminder.id }}</td>
-                <td>{{ reminder.title }}</td>
-                <td>{{ reminder.isDone ? 'Yes' : 'No' }}</td>
-                <td>{{ reminder.datetimeCreate ? reminder.datetimeCreate|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ reminder.datetimeExpire ? reminder.datetimeExpire|date('Y-m-d H:i:s') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_reminder_show', {'id': reminder.id}) }}">show</a>
-                    <a href="{{ path('app_reminder_edit', {'id': reminder.id}) }}">edit</a>
-                </td>
-            </tr>
+          <tr class="{% if loop.index is odd %}bg-secondary{% else %}bg-tertiary{% endif %} cursor-pointer "
+          onclick="window.location='{{ path('app_reminder_edit', { id: reminder.id }) }}'">
+            <td class="p-3 text-left text-white font-semibold">{{ reminder.title }}</td>
+            <td class="p-3 text-left text-white font-semibold">{{ reminder.isDone ? 'Terminé' : 'En cours' }}</td>
+            <td class="p-3 text-left text-white font-semibold">{{ reminder.category.name }}</td>
+            <td class="p-3 text-left text-white font-semibold">{{ reminder.datetimeExpire ? reminder.datetimeExpire|date('d/m/Y H:i') : '' }}</td>
+          </tr>
         {% else %}
-            <tr>
-                <td colspan="6">no records found</td>
-            </tr>
+          <tr>
+            <td colspan="5" class="p-3 text-center text-white">Aucun rappel trouvé en base de données</td>
+          </tr>
         {% endfor %}
-        </tbody>
+      </tbody>
     </table>
-
-    <a href="{{ path('app_reminder_new') }}">Create new</a>
+  </div>
 {% endblock %}

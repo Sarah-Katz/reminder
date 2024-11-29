@@ -1,13 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Reminder{% endblock %}
+{% block title %}
+  Modifier le rappel: {{ reminder.title }}
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Reminder</h1>
+  {{ include('reminder/_form.html.twig', { button_label: 'Modifier', is_edit: true, reminder: reminder, category: category }) }}
 
-    {{ include('reminder/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_reminder_index') }}">back to list</a>
-
-    {{ include('reminder/_delete_form.html.twig') }}
 {% endblock %}

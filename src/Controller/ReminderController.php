@@ -63,6 +63,7 @@ final class ReminderController extends AbstractController
         }
 
         return $this->render('reminder/edit.html.twig', [
+            'category' => $reminder->getCategory(),
             'reminder' => $reminder,
             'form' => $form,
         ]);
@@ -72,6 +73,11 @@ final class ReminderController extends AbstractController
     public function delete(Request $request, Reminder $reminder, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$reminder->getId(), $request->getPayload()->getString('_token'))) {
+            // Remove the reminder from its category
+            $category = $reminder->getCategory();
+            if ($category) {
+                $category->removeReminder($reminder);
+            }
             $entityManager->remove($reminder);
             $entityManager->flush();
         }

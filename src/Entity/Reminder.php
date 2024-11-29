@@ -19,18 +19,19 @@ class Reminder
     private ?string $title = null;
 
     #[ORM\Column]
-    private ?bool $isDone = null;
+    private ?bool $isDone = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $datetimeCreate = null;
+    private ?\DateTimeInterface $datetimeCreate;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $datetimeExpire = null;
 
     #[ORM\ManyToOne(inversedBy: 'reminders')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
-    
+
     #[ORM\PrePersist]
     /**
      * Sets the creation date and time of the reminder to the current date and time.
@@ -42,7 +43,7 @@ class Reminder
      */
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->datetimeCreate = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -67,7 +68,7 @@ class Reminder
         return $this->isDone;
     }
 
-    public function setDone(bool $isDone): static
+    public function setIsDone(bool $isDone): static
     {
         $this->isDone = $isDone;
 
@@ -105,8 +106,16 @@ class Reminder
 
     public function setCategory(?Category $category): static
     {
+        // If this reminder was already associated with a category, remove it from that category
+        if ($this->category !== null && $this->category !== $category) {
+            $this->category->removeReminder($this);
+        }
         $this->category = $category;
 
+        // If we're setting a new category (not null), add this reminder to that category
+        if ($category !== null) {
+            $category->addReminder($this);
+        }
         return $this;
     }
 }

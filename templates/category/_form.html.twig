@@ -1,0 +1,24 @@
+<div class="flex flex-col items-center justify-center min-h-screen mx-6">
+  <div class="w-full max-w-md bg-tertiary shadow-md p-6 mx-6">
+    {{ form_start(form, {'attr': {'class': 'w-full'}})}}
+      <div class="mb-6">
+        {{ form_label(form.name, 'Nom de la catégorie', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+        {{ form_widget(form.name, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.name) }}
+      </div>
+
+      <div class="flex items-center justify-between mt-6">
+        <a href="{{ path('app_category_index') }}" class="btn w-min px-4 py-2 bg-caution text-white font-bold rounded-lg shadow-md">
+          Annuler
+        </a>
+        <button type="submit" class="btn w-min px-4 py-2 bg-primary text-white font-bold rounded-lg shadow-md">
+          {{ button_label|default('Confirmer') }}
+        </button>
+      </div>
+    {{ form_end(form) }}
+  </div>
+
+    {% if is_edit is defined and is_edit %}
+        {{ include('category/_delete_form.html.twig', {'category': category}) }}
+    {% endif %}
+</div>

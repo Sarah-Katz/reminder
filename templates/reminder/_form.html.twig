@@ -1,0 +1,42 @@
+<div class="flex flex-col items-center justify-center min-h-screen mx-6">
+  <div class="w-full max-w-md bg-tertiary shadow-md p-6 mx-6">
+    {{ form_start(form, {'attr': {'class': 'w-full'}}) }}
+      <div class="mb-6">
+        {{ form_label(form.title, 'Titre du rappel', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+        {{ form_widget(form.title, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.title) }}
+      </div>
+
+      <div class="mb-6">
+        {{ form_label(form.category, 'Catégorie', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+        {{ form_widget(form.category, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.category) }}
+      </div>
+
+      <div class="mb-6"> 
+        {{ form_label(form.isDone, 'Terminé', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+        {{ form_widget(form.isDone, {'attr': {'class': 'shadow border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.isDone) }}
+      </div>
+
+      <div class="mb-6">
+        {{ form_label(form.datetimeExpire, 'Date d\'expiration', {'label_attr': {'class': 'block text-gray-700 text-sm font-bold mb-2'}}) }}
+        {{ form_widget(form.datetimeExpire, {'attr': {'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'}}) }}
+        {{ form_errors(form.datetimeExpire) }}
+      </div>
+
+      <div class="flex items-center justify-between mt-6">
+        <a href="{{ path('app_reminder_index') }}" class="btn w-min px-4 py-2 bg-caution text-white font-bold rounded-lg shadow-md">
+          Annuler
+        </a>
+        <button type="submit" class="btn w-min px-4 py-2 bg-primary text-white font-bold rounded-lg shadow-md">
+          {{ button_label|default('Confirmer') }}
+        </button>
+      </div>
+    {{ form_end(form) }}
+  </div>
+
+  {% if is_edit is defined and is_edit %}
+    {{ include('reminder/_delete_form.html.twig', {'reminder': reminder}) }}
+  {% endif %}
+</div>

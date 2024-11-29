@@ -28,9 +28,10 @@ class Reminder
     private ?\DateTimeInterface $datetimeExpire = null;
 
     #[ORM\ManyToOne(inversedBy: 'reminders')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Category $category = null;
 
-    
+
     #[ORM\PrePersist]
     /**
      * Sets the creation date and time of the reminder to the current date and time.
@@ -105,8 +106,16 @@ class Reminder
 
     public function setCategory(?Category $category): static
     {
+        // If this reminder was already associated with a category, remove it from that category
+        if ($this->category !== null && $this->category !== $category) {
+            $this->category->removeReminder($this);
+        }
         $this->category = $category;
 
+        // If we're setting a new category (not null), add this reminder to that category
+        if ($category !== null) {
+            $category->addReminder($this);
+        }
         return $this;
     }
 }

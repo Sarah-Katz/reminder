@@ -72,6 +72,10 @@ final class CategoryController extends AbstractController
     public function delete(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$category->getId(), $request->getPayload()->getString('_token'))) {
+            // Unassign all reminders from this category
+            foreach ($category->getReminders() as $reminder) {
+                $reminder->setCategory(null);
+            }
             $entityManager->remove($category);
             $entityManager->flush();
         }

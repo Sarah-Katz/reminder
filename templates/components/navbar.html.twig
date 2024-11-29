@@ -1,0 +1,16 @@
+<nav class="bg-primary shadow-lg h-24">
+  <div class="max-w-7xl mx-auto px-6 h-full">
+    <div class="flex justify-between items-center h-full">
+      <!-- Logo on the left -->
+      <div class="flex-shrink-0">
+        <a href="{{ path('app_category_index') }}"><img src="{{ asset('images/logo.png') }}" src="../../assets/images/logo.png" alt="Logo" class="h-16 w-auto" /></a>
+      </div>
+
+      <!-- Navigation links on the right -->
+      <div class="flex items-center space-x-6">
+        <a href="{{ path('app_category_index') }}" class="text-white px-6 py-2 rounded-md text-lg font-bold">Catégories</a>
+        <a href="{{ path('app_reminder_index') }}" class="text-white px-6 py-2 rounded-md text-lg font-bold">Rappels</a>
+      </div>
+    </div>
+  </div>
+</nav>

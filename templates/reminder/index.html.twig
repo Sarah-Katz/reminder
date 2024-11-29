@@ -16,6 +16,7 @@
         <tr>
           <th class="p-3 text-left">Titre</th>
           <th class="p-3 text-left">Statut</th>
+          <th class="p-3 text-left">Catégorie</th>
           <th class="p-3 text-left">Date d'expiration</th>
         </tr>
       </thead>
@@ -24,8 +25,9 @@
           <tr class="{% if loop.index is odd %}bg-secondary{% else %}bg-tertiary{% endif %} cursor-pointer "
           onclick="window.location='{{ path('app_reminder_edit', { id: reminder.id }) }}'">
             <td class="p-3 text-left text-white font-semibold">{{ reminder.title }}</td>
-            <td class="p-3 text-left text-white">{{ reminder.isDone ? 'Terminé' : 'En cours' }}</td>
-            <td class="p-3 text-left text-white">{{ reminder.datetimeExpire ? reminder.datetimeExpire|date('d/m/Y H:i') : '' }}</td>
+            <td class="p-3 text-left text-white font-semibold">{{ reminder.isDone ? 'Terminé' : 'En cours' }}</td>
+            <td class="p-3 text-left text-white font-semibold">{{ reminder.category.name }}</td>
+            <td class="p-3 text-left text-white font-semibold">{{ reminder.datetimeExpire ? reminder.datetimeExpire|date('d/m/Y H:i') : '' }}</td>
           </tr>
         {% else %}
           <tr>

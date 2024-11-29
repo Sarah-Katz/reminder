@@ -19,10 +19,10 @@ class Reminder
     private ?string $title = null;
 
     #[ORM\Column]
-    private ?bool $isDone = null;
+    private ?bool $isDone = false;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $datetimeCreate = null;
+    private ?\DateTimeInterface $datetimeCreate;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $datetimeExpire = null;
@@ -42,7 +42,7 @@ class Reminder
      */
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTimeImmutable();
+        $this->datetimeCreate = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
